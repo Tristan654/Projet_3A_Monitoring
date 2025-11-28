@@ -18,13 +18,13 @@ scrape_configs:
       - targets: ['node_exporter:9100']
 
 
-  - job_name: 'snmp'          # Job pour superviser les périphériques réseau via SNMP
+  - job_name: 'snmp_if_mib'          # Job pour superviser les périphériques réseau via SNMP
     static_configs:
       - targets:
-          - "127.0.0.1"    # IP du switch / routeur / PC que tu veux surveiller
+          - "10.10.26.215:161"    # IP du switch / routeur / PC que tu veux surveiller
     metrics_path: /snmp        # Chemin où Prometheus va interroger l'exporter SNMP
     params:
-      module: [default]        # Indique à l'exporter SNMP quel module utiliser (ici "default" du snmp.yml)
+      module: [if_mib]        # Indique à l'exporter SNMP quel module utiliser (ici "default" du snmp.yml)
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
@@ -33,6 +33,6 @@ scrape_configs:
         target_label: instance
         # Définit le label 'instance' avec l'adresse de la cible (utile pour identifier la source dans Grafana)
       - target_label: __address__
-        replacement: 127.0.0.1:9116
+        replacement: snmp_exporter:9116
         # Remplace l'adresse de scrape par l'adresse de l'exporter SNMP
         # Prometheus interrogera donc snmp_exporter:9116 et pas directement l'équipement

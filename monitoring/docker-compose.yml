@@ -33,12 +33,14 @@ services:
   snmp_exporter:
     image: prom/snmp-exporter            # Image Docker pour SNMP exporter
     container_name: snmp_exporter
-#    ports:
-#     - "9116:9116"                      # Expose l’exporter sur http://localhost:9116
+    ports:
+     - "9116:9116"                      # Expose l’exporter sur http://localhost:9116
     volumes:
       - ./snmp_exporter/snmp.yml:/etc/snmp_exporter/snmp.yml
         # Monte ton fichier SNMP local dans le conteneur
-    network_mode: "host"
+    #network_mode: "host"
+    networks:
+      - monitoring
 
   ####### NODE EXPORTER #######
   node_exporter:
