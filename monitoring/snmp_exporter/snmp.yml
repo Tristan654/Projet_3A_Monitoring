@@ -1,0 +1,11 @@
+# Définition des modules SNMP que l'exporter peut utiliser
+modules:
+
+  # Module par défaut
+  default:
+    # Liste des OID que l'exporter va "walker" (scraper)
+    walk:
+      - 1.3.6.1.2.1.1       # System : informations générales sur le périphérique
+      - 1.3.6.1.2.1.2       # Interfaces : informations sur toutes les interfaces réseau
+
+

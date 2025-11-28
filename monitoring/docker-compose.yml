@@ -1,0 +1,59 @@
+# Version du format Docker Compose
+#version: '3'
+
+# Définition des services (containers)
+services:
+
+  ####### PROMETHEUS #######
+  prometheus:
+    image: prom/prometheus:latest        # Image Docker à utiliser
+    container_name: prometheus           # Nom du container
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+        # Monte le fichier local de configuration Prometheus
+    ports:
+      - "9090:9090"                      # Expose Prometheus sur http://localhost:9090
+    networks:
+      - monitoring                        # Ajout au réseau interne
+
+  ####### GRAFANA #######
+  grafana:
+    image: grafana/grafana:latest        # Image Docker Grafana
+    container_name: grafana
+    ports:
+      - "3000:3000"                      # Expose Grafana sur http://localhost:3000
+    volumes:
+      - grafana_data:/var/lib/grafana    # Volume persistant
+    networks:
+      - monitoring
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin # Mot de passe admin
+
+  ####### SNMP EXPORTER #######
+  snmp_exporter:
+    image: prom/snmp-exporter            # Image Docker pour SNMP exporter
+    container_name: snmp_exporter
+#    ports:
+#     - "9116:9116"                      # Expose l’exporter sur http://localhost:9116
+    volumes:
+      - ./snmp_exporter/snmp.yml:/etc/snmp_exporter/snmp.yml
+        # Monte ton fichier SNMP local dans le conteneur
+    network_mode: "host"
+
+  ####### NODE EXPORTER #######
+  node_exporter:
+    image: prom/node-exporter:latest
+    container_name: node_exporter
+    restart: unless-stopped
+    ports:
+      - "9100:9100"
+    networks:
+      - monitoring
+
+# Définition du réseau Docker
+networks:
+  monitoring:
+
+# Définition des volumes persistants
+volumes:
+  grafana_data:
