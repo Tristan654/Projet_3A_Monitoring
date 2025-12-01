@@ -21,7 +21,7 @@ scrape_configs:
   - job_name: 'snmp_if_mib'          # Job pour superviser les périphériques réseau via SNMP
     static_configs:
       - targets:
-          - "10.10.26.215:161"    # IP du switch / routeur / PC que tu veux surveiller
+          - "10.10.27.105:161"    # IP du switch / routeur / PC que tu veux surveiller
     metrics_path: /snmp        # Chemin où Prometheus va interroger l'exporter SNMP
     params:
       module: [if_mib]        # Indique à l'exporter SNMP quel module utiliser (ici "default" du snmp.yml)
