@@ -1,0 +1,11 @@
+global:
+  resolve_timeout: 2m
+
+route:
+  group_by: ['alertname']
+  receiver: 'console'
+
+receivers:
+  - name: 'console'
+    webhook_configs:
+      - url: 'http://localhost:8080'

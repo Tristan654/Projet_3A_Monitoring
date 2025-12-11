@@ -2,12 +2,24 @@ global:
   scrape_interval: 15s
   evaluation_interval: 15s
 
+# ========== ALERTING (au bon endroit) ==========
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: ['alertmanager:9093']
+
+# ========== ALERT RULES ==========
+rule_files:
+  - "alert_rules.yml"
+
 scrape_configs:
 
+  # ========== PROMETHEUS ==========
   - job_name: 'prometheus'
     static_configs:
       - targets: ['prometheus:9090']
 
+  # ========== SNMP UBIQUITI ==========
   - job_name: 'snmp-ubiquiti'
     metrics_path: /snmp
 
@@ -17,7 +29,7 @@ scrape_configs:
 
     static_configs:
       - targets:
-          - 10.100.1.3   # IP de l’équipement Ubiquiti
+          - 10.100.1.3
 
     relabel_configs:
       - source_labels: [__address__]
@@ -29,6 +41,7 @@ scrape_configs:
       - target_label: __address__
         replacement: snmp_exporter:9116
 
+  # ========== NODE EXPORTER ==========
   # - job_name: 'node_exporter'
   #   static_configs:
   #     - targets: ['node_exporter:9100']
