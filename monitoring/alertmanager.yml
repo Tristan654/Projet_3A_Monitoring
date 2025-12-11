@@ -1,11 +1,27 @@
+
 global:
   resolve_timeout: 2m
+  smtp_smarthost: 'smtp.gmail.com:587'
+  smtp_from: 'phav.leo@gmail.com' 
+  smtp_auth_username: 'phav.leo@gmail.com' 
+  smtp_auth_password: 'xeyv rezd ejtg hbtg' 
+  smtp_require_tls: true
 
 route:
   group_by: ['alertname']
-  receiver: 'console'
+  receiver: 'default-receiver' 
+  
+  routes:
+    - receiver: 'email-notifier'
+    - receiver: 'console-webhook' 
 
 receivers:
-  - name: 'console'
+  - name: 'default-receiver'
+  # 1. Le récepteur Webhook
+  - name: 'console-webhook' 
     webhook_configs:
-      - url: 'http://localhost:8080'
+      - url: 'http://localhost:9090'
+  # 2. Le récepteur Email
+  - name: 'email-notifier'
+    email_configs:
+      - to: 'tristan.brau654@gmail.com' 
