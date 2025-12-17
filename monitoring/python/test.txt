@@ -1,0 +1,18 @@
+Pour tester les erreurs il suffit de lui envoyer une requete POST qui simule un mauvais traffic
+Si tu veux l'interface le port tu as juste a remplacer fireing par resolved
+
+curl -X POST http://localhost:5000/webhook \
+-H "Content-Type: application/json" \
+-H "X-Webhook-Token: 123" \
+-d '{
+  "status": "firing",
+  "alerts": [
+    {
+      "status": "firing",
+      "labels": {
+        "alertname": "TrafficHigh",
+        "ifIndex": "1"
+      }
+    }
+  ]
+}'

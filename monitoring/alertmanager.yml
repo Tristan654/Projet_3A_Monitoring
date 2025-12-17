@@ -4,7 +4,7 @@ global:
   smtp_smarthost: 'smtp.gmail.com:587'
   smtp_from: 'phav.leo@gmail.com' 
   smtp_auth_username: 'phav.leo@gmail.com' 
-  smtp_auth_password: 'xeyv rezd ejtg hbtg' 
+  smtp_auth_password: 'xeyv rezd ejtg hbtg' #mdp il faut aller sur votre google mdp pour application 
   smtp_require_tls: true
 
 route:
@@ -20,7 +20,7 @@ receivers:
   # 1. Le récepteur Webhook
   - name: 'console-webhook' 
     webhook_configs:
-      - url: 'http://localhost:9090'
+      - url: 'http://10.100.255.237:5000/webhook'
   # 2. Le récepteur Email
   - name: 'email-notifier'
     email_configs:

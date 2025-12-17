@@ -1,6 +1,17 @@
 #version: '3.8'
 
 services:
+# ========== GRAFANA ==========
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana:/var/lib/grafana
+    depends_on:
+      - prometheus
+      
   # ========== PROMETHEUS ==========
   prometheus:
     image: prom/prometheus:latest
@@ -39,16 +50,6 @@ services:
       - '--path.sysfs=/host/sys'
       - '--path.rootfs=/rootfs'
 
-  # ========== GRAFANA ==========
-  grafana:
-    image: grafana/grafana:latest
-    container_name: grafana
-    ports:
-      - "3000:3000"
-    volumes:
-      - grafana:/var/lib/grafana
-    depends_on:
-      - prometheus
 
   # ========== ALERTMANAGER ==========
   alertmanager:
@@ -58,6 +59,14 @@ services:
       - "9093:9093"
     volumes:
       - ./alertmanager.yml:/etc/alertmanager/alertmanager.yml
+
+  # ========== Python  ==========
+  python-blocker:
+    build: ./python  # Indique le dossier où se trouve ton Dockerfile
+    container_name: python-blocker
+    restart: always
+    ports:
+      - "5000:5000"
 
 # ========== VOLUMES ==========
 volumes:
