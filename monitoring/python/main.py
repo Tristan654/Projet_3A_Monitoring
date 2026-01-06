@@ -17,7 +17,7 @@ app = Flask(__name__)
 ROUTER_IP = "10.100.1.2"
 ROUTER_USER = "admin"
 ROUTER_PASS = "ranout"
-WEBHOOK_TOKEN = "123" # Ta clé de sécurité (Erreur de sécurité car MDP dans le code à regler plus tard)
+WEBHOOK_TOKEN = "123" # Clé de sécurité (Erreur de sécurité car MDP dans le code à regler plus tard)
 # ----------------------
 
 def execute_mikrotik_command(command):
