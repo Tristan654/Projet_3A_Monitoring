@@ -2,7 +2,7 @@ global:
   scrape_interval: 15s
   evaluation_interval: 15s
 
-# ========== ALERTING (au bon endroit) ==========
+# ========== ALERTING ==========
 alerting:
   alertmanagers:
     - static_configs:
