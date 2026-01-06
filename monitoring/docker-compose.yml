@@ -62,7 +62,7 @@ services:
 
   # ========== Python  ==========
   python-blocker:
-    build: ./python  # Indique le dossier où se trouve ton Dockerfile
+    build: ./python  # Indique le dossier où se trouve le Dockerfile
     container_name: python-blocker
     restart: always
     ports:
