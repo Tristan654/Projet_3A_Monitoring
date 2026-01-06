@@ -27,17 +27,17 @@ def execute_mikrotik_command(command):
         ssh.connect(ROUTER_IP, username=ROUTER_USER, password=ROUTER_PASS, timeout=5)
         
         ssh.exec_command(command)
-        print(f"✅ Commande SSH exécutée sur MikroTik : {command}")
+        print(f"Commande SSH exécutée sur MikroTik : {command}")
         ssh.close()
     except Exception as e:
-        print(f"❌ Erreur SSH : {e}")
+        print(f"Erreur SSH : {e}")
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
     # 1. Vérification de la sécurité (Brain-protection)
     key = request.headers.get('X-Webhook-Token')
     if key != WEBHOOK_TOKEN:
-        print("❌ Accès refusé : Mauvais Token")
+        print("Accès refusé : Mauvais Token")
         return "Accès refusé", 403
 
     # 2. Récupération des données JSON
@@ -45,7 +45,7 @@ def webhook():
     if not data:
         return "Format JSON invalide", 400
     
-    print(f"📦 Données reçues : {data}")
+    print(f"Données reçues : {data}")
 
     # 3. Boucle sur les alertes
     for alert in data.get('alerts', []):
@@ -53,7 +53,7 @@ def webhook():
         status = alert.get('status')
         ifIndex = alert['labels'].get('ifIndex')
         
-        print(f"🔔 Analyse : {alert_name} ({status}) sur Port {ifIndex}")
+        print(f"Analyse : {alert_name} ({status}) sur Port {ifIndex}")
 
         # LOGIQUE DE RÉPONSE
         if alert_name in ["TrafficHigh", "UplinkSaturation"]:
